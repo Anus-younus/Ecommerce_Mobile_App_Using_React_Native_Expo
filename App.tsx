@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { createStaticNavigation, NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ReorderScreen from './src/screens/ReorderScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -12,6 +12,22 @@ import Material from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunity from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { useFonts } from 'expo-font';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ProductDetailsScreen from './src/screens/ProductDetailsScreen';
+
+
+const MyHomeStack = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{
+      headerShown: false
+    }}
+    initialRouteName='PRODUCTDETAILS'>
+      <Stack.Screen name="HOME" component={HomeScreen} />
+      <Stack.Screen name="PRODUCTDETAILS" component={ProductDetailsScreen} />
+    </Stack.Navigator>
+  )
+}
 
 export default function App() {
   const Tab = createBottomTabNavigator()
@@ -28,8 +44,8 @@ export default function App() {
           tabBarActiveTintColor: "#e96e6e"
         }}>
         <Tab.Screen
-          name="HOME"
-          component={HomeScreen}
+          name="HOME_STACK"
+          component={MyHomeStack}
           options={{
             tabBarIcon: ({ size, focused, color }) => (<Entypo name="home" size={size} color={color} />)
           }}

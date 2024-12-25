@@ -19,13 +19,14 @@ export default Category
 const styles = StyleSheet.create({
     categoryText: {
         fontSize: 16,
-        fontWeight: 600,
+        fontWeight: 400,
         marginHorizontal: 10,
         color: "#938f8f",
         backgroundColor: "#dfdcdc",
         paddingHorizontal: 20,
         paddingVertical: 10,
         textAlign: "center",
-        borderRadius: 10
+        borderRadius: 10,
+        fontFamily:"Poppins-Regular"
     }
 })

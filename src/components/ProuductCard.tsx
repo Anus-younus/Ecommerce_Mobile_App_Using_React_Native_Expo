@@ -1,25 +1,28 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useNavigation } from '@react-navigation/native';
 
-const ProuductCard = ({ item, isLike, setIsLike }: any) => {
+const ProuductCard = ({ item, handleLiked }: any) => {
+  const navigation = useNavigation<any>()
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={() => {navigation.navigate("PRODUCTDETAILS")}} style={styles.container}>
       <Image
-        source={require('../assets/girl2.png')}
+        source={{ uri: item.image }}
         style={styles.coverImage}
       />
       <View style={styles.content}>
-        <Text style={styles.title}>Jacket Jeans</Text>
-        <Text style={styles.price}>$45.9</Text>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.price}>{item.price}</Text>
       </View>
-      <TouchableOpacity onPress={() => { setIsLike(!isLike) }} style={styles.likeContainer}>
+      <TouchableOpacity onPress={() => { handleLiked(item) }} style={styles.likeContainer}>
         {
-          isLike ?
-            <AntDesign name="heart" size={15} color="#E55858" /> :
-            <AntDesign name="hearto" size={15} color="#E55858" />
+          !item?.isLiked ?
+            <AntDesign name="hearto" size={15} color="#E55858" /> :
+            <AntDesign name="heart" size={15} color="#E55858" />
+
         }
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   )
 }
 
@@ -40,14 +43,16 @@ const styles = StyleSheet.create({
     position: "relative"
   },
   title: {
-    fontSize: 18,
+    fontSize: 14,
     color: "#444",
-    fontWeight: "600"
+    fontWeight: "800",
+    fontFamily: "Poppins-Regular"
   },
   price: {
-    fontSize: 18,
+    fontSize: 14,
     color: "#9c9c9c",
-    fontWeight: "600"
+    fontWeight: "600",
+    fontFamily: "Poppins-Regular"
   },
   content: {
     paddingRight: 23,

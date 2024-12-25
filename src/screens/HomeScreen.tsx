@@ -5,11 +5,28 @@ import Header from '../components/Header';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Category from '../components/Category';
 import ProuductCard from '../components/ProuductCard';
+import data from "../data/data.json"
+import Card from '../components/Card';
 
 const categories = ['Trending Now', 'All', 'New', 'Mens', 'Womens']
 const HomeScreen = () => {
+  const [prouducts, setProuducts] = useState(data.products)
   const [selectedCategory, setSelectedCategory] = useState('Trending Now')
   const [isLike, setIsLike] = useState(false)
+
+  const handleLiked = (item: any) => {
+    const newProuducts: any = prouducts.map((prouduct) => {
+      console.log("item=>", item)
+      if (prouduct.id === item.id) {
+        return {
+          ...prouduct,
+          isLiked: true
+        }
+      }
+      return prouduct
+    })
+    setProuducts(newProuducts)
+  }
 
   return (
     <LinearGradient
@@ -49,12 +66,19 @@ const HomeScreen = () => {
             </View>
           </>
         }
-        data={[1, 2, 3, 4, 5, 6]}
-        renderItem={({ item }) => <ProuductCard item={item} isLike={isLike} setIsLike={setIsLike} />}
+        // data={[1, 2]}
+        // renderItem={Card}
+        data={prouducts}
+        renderItem={({ item }) => 
+        <ProuductCard 
+        handleLiked={handleLiked} 
+        item={item}
+        />
+      }
         numColumns={2}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingBottom:150
+          paddingBottom: 150
         }}
       />
     </LinearGradient>
@@ -72,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: "#000",
     marginTop: 20,
-    fontFamily:"Poppins-Regular"
+    fontFamily: "Poppins-Regular"
   },
   inputContainer: {
     flexDirection: 'row',
@@ -91,5 +115,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
     color: '#000',
+    fontFamily: "Poppins-Regular"
   },
 });
